@@ -13,6 +13,9 @@ namespace AspNetCoreFundamentals_Coursework.Pages.Restaurants
     {
         public Restaurant Restaurant { get; set; }
 
+        [TempData]
+        public string Message { get; set; }
+
         private readonly IRestaurantData _data;
         public DetailModel(IRestaurantData data)
         {

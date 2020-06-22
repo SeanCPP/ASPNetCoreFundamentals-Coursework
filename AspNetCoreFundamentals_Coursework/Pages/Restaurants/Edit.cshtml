@@ -1,10 +1,10 @@
-﻿@page "{restaurantId:int}"
+﻿@page "{restaurantId:int?}"
 @model AspNetCoreFundamentals_Coursework.Pages.Restaurants.EditModel
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Editing @(Model.Restaurant.Name != null ? Model.Restaurant.Name : "Restaurant")</h1>
+<h1>@(Model.Restaurant.Id > 0 ? "Editing" : "Adding") @(Model.Restaurant.Name != null ? Model.Restaurant.Name : "Restaurant")</h1>
 
 <form method="post">
     <input type="hidden" asp-for="Restaurant.Id" />

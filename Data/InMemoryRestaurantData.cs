@@ -27,6 +27,13 @@ namespace Data
             return restaurants.SingleOrDefault(r => r.Id == id);
         }
 
+        public Restaurant Create(Restaurant newItem)
+        {
+            restaurants.Add(newItem);
+            newItem.Id = restaurants.Max(r => r.Id) + 1;
+            return newItem;
+        }
+
         public Restaurant Update(Restaurant itemToUpdate)
         {
             var restaurant = restaurants.SingleOrDefault(r => r.Id == itemToUpdate.Id);

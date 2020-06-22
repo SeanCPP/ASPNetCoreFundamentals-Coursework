@@ -26,27 +26,42 @@ namespace AspNetCoreFundamentals_Coursework.Pages.Restaurants
         }
 
         
-        public IActionResult OnGet(int restaurantId)
+        public IActionResult OnGet(int? restaurantId)
         {
             Cuisines = helper.GetEnumSelectList<CuisineType>();
-            Restaurant = data.GetById(restaurantId);
+            if (restaurantId.HasValue)
+            {
+                Restaurant = data.GetById(restaurantId.Value);
+            }
+            else
+            {
+                Restaurant = new Restaurant();
+            }
             if(Restaurant is null)
             {
                 return RedirectToPage("./NotFound");
             }
             return Page();
-        } 
+        }
 
         public IActionResult OnPost()
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+            {
+                Cuisines = helper.GetEnumSelectList<CuisineType>();
+                return Page();
+            }
+            if (Restaurant.Id > 0)
             {
                 data.Update(Restaurant);
-                data.Commit();
-                return RedirectToPage("./List");
             }
-            Cuisines = helper.GetEnumSelectList<CuisineType>();
-            return Page();
+            else
+            {
+                data.Create(Restaurant);
+            }
+            data.Commit();
+            TempData["Message"] = "Restaurant saved!";
+            return RedirectToPage("./Detail/", new { restaurantId = Restaurant.Id,  });
         }
     }
 }

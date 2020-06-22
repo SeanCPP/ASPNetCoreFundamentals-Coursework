@@ -10,6 +10,7 @@ namespace Data
         IEnumerable<Restaurant> GetByName(string name=null);
         Restaurant GetById(int id);
         Restaurant Update(Restaurant itemToUpdate);
+        Restaurant Create(Restaurant newItem);
         int Commit();
     }
 }
