@@ -6,3 +6,22 @@
 
 <h1 class="text-info">Restaurants</h1>
 
+<table class="table table-striped border">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Cuisine Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var restaurant in Model.Restaurants)
+        {
+        <tr>
+            <td>@restaurant.Name</td>
+            <td>@restaurant.Location</td>
+            <td>@restaurant.Cuisine</td>
+        </tr>
+        }
+    </tbody>
+</table>
