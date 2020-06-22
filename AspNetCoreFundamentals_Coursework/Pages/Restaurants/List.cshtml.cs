@@ -15,15 +15,18 @@ namespace AspNetCoreFundamentals_Coursework.Pages.Restaurants
         private readonly IRestaurantData _data;
         private readonly IConfiguration config;
 
+        //[BindProperty]
+       // public string SearchTerm { get; set; }
+
         public IEnumerable<Restaurant> Restaurants { get; set; }
         public ListModel(IConfiguration configuration, IRestaurantData data)
         {
             config = configuration;
             _data = data;
         }
-        public void OnGet()
+        public void OnGet(string searchTerm)
         {
-            Restaurants = _data.GetAll();
+            Restaurants = _data.GetByName(searchTerm);
         }
     }
 }
