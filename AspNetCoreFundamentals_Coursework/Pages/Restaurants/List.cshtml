@@ -9,10 +9,10 @@
 <form method="get">
     <div class="container row p-0">
         <div class="col-9">
-            <input type="search" class="form-control" value="" name="searchTerm"/>
+            <input type="search" class="form-control" asp-for="SearchTerm"/>
         </div>
         <div class="col-3">
-            <button class="btn btn-info form-control text-white">Search</button>
+            <button class="btn btn-info form-control text-white m-0">Search</button>
         </div>
     </div>
 </form>
@@ -31,6 +31,10 @@
             <td>@restaurant.Name</td>
             <td>@restaurant.Location</td>
             <td>@restaurant.Cuisine</td>
+            <td>
+                <a asp-page="./Detail" asp-route-restaurantId="@restaurant.Id" class="btn btn-info">Details</a>
+                <a asp-page="./Edit" asp-route-restaurantId="@restaurant.Id" class="btn btn-success">Edit</a>
+            </td>
         </tr>
         }
     </tbody>

@@ -22,6 +22,26 @@ namespace Data
                    orderby r.Name
                    select r;
         }
+        public Restaurant GetById(int id)
+        {
+            return restaurants.SingleOrDefault(r => r.Id == id);
+        }
+
+        public Restaurant Update(Restaurant itemToUpdate)
+        {
+            var restaurant = restaurants.SingleOrDefault(r => r.Id == itemToUpdate.Id);
+            if(restaurant != null)
+            {
+                restaurant.Name = itemToUpdate.Name;
+                restaurant.Location = itemToUpdate.Location;
+                restaurant.Cuisine = itemToUpdate.Cuisine;
+            }
+            return restaurant;
+        }
+        public int Commit() 
+        {
+            return 0;
+        }
     }
 }
 
