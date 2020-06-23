@@ -26,7 +26,7 @@ namespace AspNetCoreFundamentals_Coursework
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<DbSettings>(Configuration.GetSection("DatabaseSettings"));
-            services.AddSingleton<IRestaurantData, SqlServerRestaurantData>();
+            services.AddScoped<IRestaurantData, SqlServerRestaurantData>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 

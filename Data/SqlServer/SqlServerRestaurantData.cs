@@ -16,7 +16,7 @@ namespace Data.SqlServer
     {
         private readonly DbSettings config;
 
-
+        private const string TableName = "Restaurants";
         public SqlServerRestaurantData(IOptions<DbSettings> config)
         {
             this.config = config.Value;
@@ -28,7 +28,7 @@ namespace Data.SqlServer
 
         public Restaurant Create(Restaurant newItem)
         {
-            string sql = "INSERT INTO RestaurantList(Name, Location, Cuisine)";
+            string sql = $"INSERT INTO {TableName}(Name, Location, Cuisine)";
             sql += " OUTPUT Inserted.Id";
             sql += " VALUES(@Name, @Location, @Cuisine);";
             SqlDo(sql, (cnn, cmd) => 
@@ -50,7 +50,7 @@ namespace Data.SqlServer
             var restaurant = GetById(id);
             if(restaurant != null)
             {
-                string sql = "DELETE FROM RestaurantList WHERE Id = @Id";
+                string sql = $"DELETE FROM {TableName} WHERE Id = @Id";
                 SqlDo(sql, (cnn, cmd) =>
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
@@ -76,12 +76,12 @@ namespace Data.SqlServer
             string sql = "";
             if (name is null)
             {
-                sql = "SELECT * FROM RestaurantList;";
+                sql = $"SELECT * FROM {TableName};";
             }
             else
             {
                 // search partial match
-                sql = "SELECT * FROM RestaurantList WHERE CHARINDEX(@Name, Name) > 0;";
+                sql = $"SELECT * FROM {TableName} WHERE CHARINDEX(@Name, Name) > 0;";
             }
             SqlDo(sql, (cnn, cmd) =>
             {
@@ -109,7 +109,7 @@ namespace Data.SqlServer
 
         public Restaurant Update(Restaurant itemToUpdate)
         {
-            string sql = "UPDATE RestaurantList";
+            string sql = $"UPDATE {TableName}";
             sql += $" SET Name = @Name,";
             sql += $" Location = @Location,";
             sql += $" Cuisine = @Cuisine";
