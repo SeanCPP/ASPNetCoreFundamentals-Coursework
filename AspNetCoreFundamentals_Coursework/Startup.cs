@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Data;
+using Data.SqlServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,7 +25,8 @@ namespace AspNetCoreFundamentals_Coursework
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IRestaurantData, InMemoryRestaurantData>();
+            services.Configure<DbSettings>(Configuration.GetSection("DatabaseSettings"));
+            services.AddSingleton<IRestaurantData, SqlServerRestaurantData>();
             services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 

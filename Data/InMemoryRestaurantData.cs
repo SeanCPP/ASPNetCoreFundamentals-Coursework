@@ -45,6 +45,17 @@ namespace Data
             }
             return restaurant;
         }
+
+        public Restaurant Delete(int id)
+        {
+            var restaurant = restaurants.FirstOrDefault(r => r.Id == id);
+            if (restaurant != null)
+            {
+                restaurants.Remove(restaurant);
+            }
+            return restaurant;
+        }
+
         public int Commit() 
         {
             return 0;

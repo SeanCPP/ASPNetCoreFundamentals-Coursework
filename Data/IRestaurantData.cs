@@ -11,6 +11,7 @@ namespace Data
         Restaurant GetById(int id);
         Restaurant Update(Restaurant itemToUpdate);
         Restaurant Create(Restaurant newItem);
+        Restaurant Delete(int id);
         int Commit();
     }
 }

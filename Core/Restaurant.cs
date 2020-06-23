@@ -7,6 +7,7 @@ namespace Core
 {
     public class Restaurant
     {
+        [Key]
         public int Id { get; set; }
 
         [Required, StringLength(80)]
@@ -16,5 +17,7 @@ namespace Core
         public string Location { get; set; }
 
         public CuisineType Cuisine { get; set; }
+
+        public string CuisineString { get; set; }
     }
 }
