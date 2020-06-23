@@ -16,7 +16,7 @@ namespace Data.SqlServer
     {
         private readonly DbSettings config;
 
-        private const string TableName = "Restaurants";
+        private const string spPrefix = "spRestaurantList";
         public SqlServerRestaurantData(IOptions<DbSettings> config)
         {
             this.config = config.Value;
@@ -28,12 +28,11 @@ namespace Data.SqlServer
 
         public Restaurant Create(Restaurant newItem)
         {
-            string sql = $"INSERT INTO {TableName}(Name, Location, Cuisine)";
-            sql += " OUTPUT Inserted.Id";
-            sql += " VALUES(@Name, @Location, @Cuisine);";
+            string sql = $"{spPrefix}_Create";
+
             SqlDo(sql, (cnn, cmd) => 
             {
-                cmd.CommandType = CommandType.Text;
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@Name", newItem.Name);
                 cmd.Parameters.AddWithValue("@Location", newItem.Location);
                 cmd.Parameters.AddWithValue("@Cuisine", (int)newItem.Cuisine);
@@ -50,11 +49,11 @@ namespace Data.SqlServer
             var restaurant = GetById(id);
             if(restaurant != null)
             {
-                string sql = $"DELETE FROM {TableName} WHERE Id = @Id";
+                string sql = $"{spPrefix}_DeleteItem";
                 SqlDo(sql, (cnn, cmd) =>
                 {
                     cmd.Parameters.AddWithValue("@Id", id);
-                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.ExecuteNonQuery();
                 });
             }
@@ -76,15 +75,17 @@ namespace Data.SqlServer
             string sql = "";
             if (name is null)
             {
-                sql = $"SELECT * FROM {TableName};";
+                sql = $"{spPrefix}_GetAll";
             }
             else
             {
                 // search partial match
-                sql = $"SELECT * FROM {TableName} WHERE CHARINDEX(@Name, Name) > 0;";
+                sql = $"{spPrefix}_RestaurantList_GetPartialMatches";
+                //sql = $"SELECT * FROM {TableName} WHERE CHARINDEX(@Name, Name) > 0;";
             }
             SqlDo(sql, (cnn, cmd) =>
             {
+                cmd.CommandType = CommandType.StoredProcedure;
                 if (name != null)
                 {
                     cmd.Parameters.AddWithValue("@Name", name);
@@ -109,17 +110,14 @@ namespace Data.SqlServer
 
         public Restaurant Update(Restaurant itemToUpdate)
         {
-            string sql = $"UPDATE {TableName}";
-            sql += $" SET Name = @Name,";
-            sql += $" Location = @Location,";
-            sql += $" Cuisine = @Cuisine";
-            sql += $" WHERE Id = {itemToUpdate.Id}";
+            string sql = $"{spPrefix}_UpdateItem";
             SqlDo(sql, (cnn, cmd) =>
             {
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@Id", itemToUpdate.Id);
                 cmd.Parameters.AddWithValue("@Name", itemToUpdate.Name);
                 cmd.Parameters.AddWithValue("@Location", itemToUpdate.Location);
                 cmd.Parameters.AddWithValue("@Cuisine", itemToUpdate.Cuisine);
-                cmd.CommandType = CommandType.Text;
                 cmd.ExecuteNonQuery();
             });
             return GetById(itemToUpdate.Id);
