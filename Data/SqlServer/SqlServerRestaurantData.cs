@@ -80,7 +80,7 @@ namespace Data.SqlServer
             else
             {
                 // search partial match
-                sql = $"{spPrefix}_RestaurantList_GetPartialMatches";
+                sql = $"{spPrefix}_GetPartialMatches";
                 //sql = $"SELECT * FROM {TableName} WHERE CHARINDEX(@Name, Name) > 0;";
             }
             SqlDo(sql, (cnn, cmd) =>
