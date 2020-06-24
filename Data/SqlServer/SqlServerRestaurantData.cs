@@ -72,24 +72,20 @@ namespace Data.SqlServer
         {
             var restaurants = new List<Restaurant>();
             DataTable dt = null;
-            string sql = "";
-            if (name is null)
+            string sql = string.Empty;
+            if (name == null)
             {
                 sql = $"{spPrefix}_GetAll";
             }
             else
             {
-                // search partial match
                 sql = $"{spPrefix}_GetPartialMatches";
-                //sql = $"SELECT * FROM {TableName} WHERE CHARINDEX(@Name, Name) > 0;";
             }
             SqlDo(sql, (cnn, cmd) =>
             {
-                cmd.CommandType = CommandType.StoredProcedure;
-                if (name != null)
-                {
+                if (name != null) 
                     cmd.Parameters.AddWithValue("@Name", name);
-                }
+                cmd.CommandType = CommandType.StoredProcedure;
                 using var adapter = new SqlDataAdapter(cmd);
                 dt = new DataTable();
                 adapter.Fill(dt);

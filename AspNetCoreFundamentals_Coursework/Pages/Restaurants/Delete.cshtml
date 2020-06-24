@@ -1,0 +1,13 @@
+﻿@page "{restaurantId}"
+@model AspNetCoreFundamentals_Coursework.Pages.Restaurants.DeleteModel
+@{
+}
+
+<h2>Delete Restaurant</h2>
+<div class="alert alert-danger">
+    Are you sure you want to delete @Model.Restaurant.Name (@Model.Restaurant.Location)? 
+</div>
+<form method="post">
+    <button type="submit" class="btn btn-danger">Yes</button>
+    <a asp-page="List" class="btn btn-info">Cancel</a>
+</form>
