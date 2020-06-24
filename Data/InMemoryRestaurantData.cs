@@ -56,6 +56,10 @@ namespace Data
             return restaurant;
         }
 
+        public int Count()
+        {
+            return restaurants.Count;
+        }
         public int Commit() 
         {
             return 0;

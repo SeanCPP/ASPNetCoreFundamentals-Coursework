@@ -119,6 +119,18 @@ namespace Data.SqlServer
             return GetById(itemToUpdate.Id);
         }
 
+        public int Count()
+        {
+            string sql = $"{spPrefix}_GetCount";
+            int count = 0;
+            SqlDo(sql, (cnn, cmd) =>
+            {
+                cmd.CommandType = CommandType.StoredProcedure;
+                count = (int)cmd.ExecuteScalar();
+            });
+            return count;
+        }
+
         private void SqlDo(string sql, Action<SqlConnection, SqlCommand> action)
         {
             using var cnn = new SqlConnection(config.ConnectionString);

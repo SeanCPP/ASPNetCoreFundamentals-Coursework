@@ -12,6 +12,8 @@ namespace Data
         Restaurant Update(Restaurant itemToUpdate);
         Restaurant Create(Restaurant newItem);
         Restaurant Delete(int id);
+
+        int Count();
         int Commit();
     }
 }
