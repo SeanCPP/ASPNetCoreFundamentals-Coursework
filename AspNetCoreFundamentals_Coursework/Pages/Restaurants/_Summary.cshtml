@@ -6,8 +6,8 @@
         <h3>@Model.Name</h3>
     </div>
     <div class="card-body">
-        <span>Location: @Model.Location</span>
-        <span>Cuisine: @Model.Cuisine</span>
+        <div>Location: @Model.Location</div>
+        <div>Cuisine: @Model.Cuisine</div>
     </div>
     <div class="card-footer">
         <a asp-page="./Detail" asp-route-restaurantId="@Model.Id" class="btn btn-info">Details</a>
