@@ -46,7 +46,7 @@ namespace AspNetCoreFundamentals_Coursework
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseNodeModules();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -54,6 +54,7 @@ namespace AspNetCoreFundamentals_Coursework
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapControllers();
             });
         }
     }
