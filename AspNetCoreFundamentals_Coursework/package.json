@@ -2,6 +2,6 @@
   "name": "aspnetcorefundamentals_coursework",
   "version": "1.0.0",
   "dependencies": {
-    "datatables.net-bs4": "^1.10.21"
+    "datatables.net-bs4": "^1.13.5"
   }
 }
